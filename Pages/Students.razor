@@ -197,12 +197,10 @@
 
     private async Task OpenAddDialog()
     {
-        var parameters = new DialogParameters<StudentDialog>
-        {
-            { x => x.Student, new Student() },
-            { x => x.Courses, _courses },
-            { x => x.IsEditMode, false }
-        };
+        var parameters = new DialogParameters();
+        parameters.Add("Student", new Student());
+        parameters.Add("Courses", _courses);
+        parameters.Add("IsEditMode", false);
 
         var dialog = await DialogService.ShowAsync<StudentDialog>("Aggiungi Studente", parameters);
         var result = await dialog.Result;
@@ -230,12 +228,10 @@
                 IsActive = student.IsActive
             };
 
-        var parameters = new DialogParameters<StudentDialog>
-        {
-            { x => x.Student, studentCopy },
-            { x => x.Courses, _courses },
-            { x => x.IsEditMode, true }
-        };
+        var parameters = new DialogParameters();
+        parameters.Add("Student", studentCopy);
+        parameters.Add("Courses", _courses);
+        parameters.Add("IsEditMode", true);
 
         var dialog = await DialogService.ShowAsync<StudentDialog>("Modifica Studente", parameters);
         var result = await dialog.Result;
@@ -250,21 +246,17 @@
 
     private async Task OpenViewDialog(Student student)
     {
-        var parameters = new DialogParameters<StudentViewDialog>
-        {
-            { x => x.Student, student }
-        };
+        var parameters = new DialogParameters();
+        parameters.Add("Student", student);
 
         await DialogService.ShowAsync<StudentViewDialog>("Dettagli Studente", parameters);
     }
 
     private async Task OpenDeleteDialog(Student student)
     {
-        var parameters = new DialogParameters<ConfirmDialog>
-        {
-            { x => x.ContentText, $"Sei sicuro di voler eliminare lo studente {student.FullName}? Questa azione non può essere annullata." },
-            { x => x.Color, Color.Error }
-        };
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", $"Sei sicuro di voler eliminare lo studente {student.FullName}? Questa azione non può essere annullata.");
+        parameters.Add("Color", Color.Error);
 
         var dialog = await DialogService.ShowAsync<ConfirmDialog>("Conferma Eliminazione", parameters);
         var result = await dialog.Result;

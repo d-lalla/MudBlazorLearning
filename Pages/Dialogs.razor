@@ -183,10 +183,8 @@ private async Task OpenSimpleDialog()
             FullWidth = true
         };
 
-        var parameters = new DialogParameters<SimpleDialog>
-        {
-            { x => x.ContentText, "Questo è un dialog semplice con un messaggio." }
-        };
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", "Questo è un dialog semplice con un messaggio.");
 
         var dialog = await DialogService.ShowAsync<SimpleDialog>("Dialog Semplice", parameters, options);
         var result = await dialog.Result;
@@ -197,10 +195,8 @@ private async Task OpenSimpleDialog()
     private async Task OpenAlertDialog()
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters<SimpleDialog>
-        {
-            { x => x.ContentText, "Questa è un'importante notifica che richiede la tua attenzione!" }
-        };
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", "Questa è un'importante notifica che richiede la tua attenzione!");
 
         await DialogService.ShowAsync<SimpleDialog>("Attenzione!", parameters, options);
     }
@@ -208,10 +204,8 @@ private async Task OpenSimpleDialog()
     private async Task OpenConfirmationDialog()
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters<ConfirmDialog>
-        {
-            { x => x.ContentText, "Sei sicuro di voler procedere con questa azione?" }
-        };
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", "Sei sicuro di voler procedere con questa azione?");
 
         var dialog = await DialogService.ShowAsync<ConfirmDialog>("Conferma", parameters, options);
         var result = await dialog.Result;
@@ -222,11 +216,9 @@ private async Task OpenSimpleDialog()
     private async Task OpenDeleteDialog()
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters<ConfirmDialog>
-        {
-            { x => x.ContentText, "Sei sicuro di voler eliminare questo elemento? Questa azione non può essere annullata." },
-            { x => x.Color, Color.Error }
-        };
+        var parameters = new DialogParameters();
+        parameters.Add("ContentText", "Sei sicuro di voler eliminare questo elemento? Questa azione non può essere annullata.");
+        parameters.Add("Color", Color.Error);
 
         var dialog = await DialogService.ShowAsync<ConfirmDialog>("Conferma Eliminazione", parameters, options);
         var result = await dialog.Result;
