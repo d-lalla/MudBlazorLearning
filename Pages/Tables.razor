@@ -121,7 +121,7 @@
                     <MudTd DataLabel="Nome">@context.FirstName @context.LastName</MudTd>
                     <MudTd DataLabel="Ruolo">@context.Role</MudTd>
                     <MudTd DataLabel="Status">
-                        <MudChip Size="Size.Small"
+                        <MudChip T="string" Size="Size.Small"
                                  Color="@(context.IsActive ? Color.Success : Color.Default)">
                             @(context.IsActive ? "Attivo" : "Inattivo")
                         </MudChip>

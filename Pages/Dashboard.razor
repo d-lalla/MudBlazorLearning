@@ -97,7 +97,7 @@
                 <RowTemplate>
                     <MudTd DataLabel="Prodotto">@context.Name</MudTd>
                     <MudTd DataLabel="Categoria">
-                        <MudChip Size="Size.Small" Color="@context.CategoryColor">@context.Category</MudChip>
+                        <MudChip T="string" Size="Size.Small" Color="@context.CategoryColor">@context.Category</MudChip>
                     </MudTd>
                     <MudTd DataLabel="Vendite">@context.Sales</MudTd>
                     <MudTd DataLabel="Fatturato">€@context.Revenue.ToString("N0")</MudTd>

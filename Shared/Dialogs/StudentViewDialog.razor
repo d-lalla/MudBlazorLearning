@@ -57,7 +57,7 @@
                 <MudPaper Elevation="0" Class="pa-3 mb-2">
                     <MudText Typo="Typo.caption" Color="Color.Secondary">Corso</MudText>
                     <MudText Typo="Typo.body1">
-                        <MudChip Size="Size.Small" Color="Color.Info">@Student.Course</MudChip>
+                        <MudChip T="string" Size="Size.Small" Color="Color.Info">@Student.Course</MudChip>
                     </MudText>
                 </MudPaper>
             </MudItem>
@@ -76,7 +76,7 @@
                 <MudPaper Elevation="0" Class="pa-3 mb-2">
                     <MudText Typo="Typo.caption" Color="Color.Secondary">Stato</MudText>
                     <MudText Typo="Typo.body1">
-                        <MudChip Size="Size.Small"
+                        <MudChip T="string" Size="Size.Small"
                                  Color="@(Student.IsActive ? Color.Success : Color.Default)">
                             @(Student.IsActive ? "Attivo" : "Inattivo")
                         </MudChip>
