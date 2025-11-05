@@ -1,0 +1,101 @@
+@using MudBlazorLearning.Models
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Person" Class="mr-2" />
+            Dettagli Studente
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid>
+            <MudItem xs="12" Class="d-flex justify-center mb-4">
+                <MudAvatar Color="Color.Primary" Size="Size.Large">
+                    <MudText Typo="Typo.h4">@Student.FirstName[0]@Student.LastName[0]</MudText>
+                </MudAvatar>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudPaper Elevation="0" Class="pa-3 mb-2">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">ID</MudText>
+                    <MudText Typo="Typo.body1"><strong>@Student.Id</strong></MudText>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <MudPaper Elevation="0" Class="pa-3 mb-2">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Nome</MudText>
+                    <MudText Typo="Typo.body1"><strong>@Student.FirstName</strong></MudText>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <MudPaper Elevation="0" Class="pa-3 mb-2">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Cognome</MudText>
+                    <MudText Typo="Typo.body1"><strong>@Student.LastName</strong></MudText>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudPaper Elevation="0" Class="pa-3 mb-2">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Email</MudText>
+                    <MudText Typo="Typo.body1">
+                        <MudIcon Icon="@Icons.Material.Filled.Email" Size="Size.Small" Class="mr-1" />
+                        @Student.Email
+                    </MudText>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <MudPaper Elevation="0" Class="pa-3 mb-2">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Età</MudText>
+                    <MudText Typo="Typo.body1"><strong>@Student.Age anni</strong></MudText>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <MudPaper Elevation="0" Class="pa-3 mb-2">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Corso</MudText>
+                    <MudText Typo="Typo.body1">
+                        <MudChip Size="Size.Small" Color="Color.Info">@Student.Course</MudChip>
+                    </MudText>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <MudPaper Elevation="0" Class="pa-3 mb-2">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Data Iscrizione</MudText>
+                    <MudText Typo="Typo.body1">
+                        <MudIcon Icon="@Icons.Material.Filled.CalendarToday" Size="Size.Small" Class="mr-1" />
+                        @Student.EnrollmentDate.ToString("dd/MM/yyyy")
+                    </MudText>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+                <MudPaper Elevation="0" Class="pa-3 mb-2">
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">Stato</MudText>
+                    <MudText Typo="Typo.body1">
+                        <MudChip Size="Size.Small"
+                                 Color="@(Student.IsActive ? Color.Success : Color.Default)">
+                            @(Student.IsActive ? "Attivo" : "Inattivo")
+                        </MudChip>
+                    </MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Chiudi</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance? MudDialog { get; set; }
+
+    [Parameter]
+    public Student Student { get; set; } = new();
+
+    void Close() => MudDialog?.Close();
+}

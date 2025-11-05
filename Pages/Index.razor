@@ -1,0 +1,144 @@
+@page "/"
+
+<PageTitle>Home - MudBlazor Learning</PageTitle>
+
+<MudText Typo="Typo.h3" Class="mb-4">Benvenuto in MudBlazor Learning!</MudText>
+
+<MudGrid>
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h5" Class="mb-2">
+                <MudIcon Icon="@Icons.Material.Filled.School" Class="mr-2" />
+                Che cosa imparerai
+            </MudText>
+            <MudText Typo="Typo.body1" Class="mb-2">
+                Questo progetto didattico ti guiderà attraverso i concetti fondamentali di:
+            </MudText>
+            <MudList>
+                <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                    <MudText><strong>Blazor Server</strong> - Framework web moderno di Microsoft</MudText>
+                </MudListItem>
+                <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                    <MudText><strong>C#</strong> - Linguaggio object-oriented simile a Java</MudText>
+                </MudListItem>
+                <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                    <MudText><strong>MudBlazor</strong> - Libreria UI Material Design per Blazor</MudText>
+                </MudListItem>
+                <MudListItem Icon="@Icons.Material.Filled.CheckCircle">
+                    <MudText><strong>Razor Components</strong> - Componenti riutilizzabili</MudText>
+                </MudListItem>
+            </MudList>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h5" Class="mb-2">
+                <MudIcon Icon="@Icons.Material.Filled.Code" Class="mr-2" />
+                Per i Developers Java
+            </MudText>
+            <MudText Typo="Typo.body1" Class="mb-2">
+                Se vieni da Java, troverai molte similitudini in C#:
+            </MudText>
+            <MudList Dense="true">
+                <MudListItem>
+                    <MudText>• Sintassi simile (classi, interfacce, ereditarietà)</MudText>
+                </MudListItem>
+                <MudListItem>
+                    <MudText>• Garbage collection automatico</MudText>
+                </MudListItem>
+                <MudListItem>
+                    <MudText>• Strong typing e LINQ (simile a Stream API)</MudText>
+                </MudListItem>
+                <MudListItem>
+                    <MudText>• Properties invece di getter/setter</MudText>
+                </MudListItem>
+                <MudListItem>
+                    <MudText>• async/await invece di CompletableFuture</MudText>
+                </MudListItem>
+            </MudList>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12">
+        <MudAlert Severity="Severity.Info" Variant="Variant.Filled">
+            <MudText Typo="Typo.body1">
+                <strong>Suggerimento:</strong> Inizia esplorando il menu laterale. Ogni sezione contiene esempi pratici con codice commentato.
+                Usa il pulsante tema (in alto a destra) per passare tra modalità chiara e scura!
+            </MudText>
+        </MudAlert>
+    </MudItem>
+
+    <MudItem xs="12" md="4">
+        <MudCard Elevation="4">
+            <MudCardHeader>
+                <CardHeaderAvatar>
+                    <MudAvatar Color="Color.Primary">
+                        <MudIcon Icon="@Icons.Material.Filled.Widgets" />
+                    </MudAvatar>
+                </CardHeaderAvatar>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Componenti Base</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudText Typo="Typo.body2">
+                    Esplora bottoni, card, tipografia e layout base di MudBlazor
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" Href="/buttons">Vai ai Bottoni</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" md="4">
+        <MudCard Elevation="4">
+            <MudCardHeader>
+                <CardHeaderAvatar>
+                    <MudAvatar Color="Color.Secondary">
+                        <MudIcon Icon="@Icons.Material.Filled.Input" />
+                    </MudAvatar>
+                </CardHeaderAvatar>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Forms & Validazione</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudText Typo="Typo.body2">
+                    Impara a creare form con validazione, simili a Bean Validation in Java
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" Href="/forms">Vai ai Forms</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" md="4">
+        <MudCard Elevation="4">
+            <MudCardHeader>
+                <CardHeaderAvatar>
+                    <MudAvatar Color="Color.Tertiary">
+                        <MudIcon Icon="@Icons.Material.Filled.TableChart" />
+                    </MudAvatar>
+                </CardHeaderAvatar>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Tabelle & CRUD</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudText Typo="Typo.body2">
+                    Gestisci dati con tabelle interattive e operazioni CRUD complete
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" Href="/students">Vai al CRUD</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+@code {
+
+}

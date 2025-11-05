@@ -1,0 +1,31 @@
+<MudDialog>
+    <DialogContent>
+        <MudTextField @bind-Value="_name"
+                      Label="Nome"
+                      Variant="Variant.Outlined"
+                      Class="mb-4" />
+        <MudTextField @bind-Value="_email"
+                      Label="Email"
+                      Variant="Variant.Outlined" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Annulla</MudButton>
+        <MudButton Color="Color.Success" Variant="Variant.Filled" OnClick="Submit">Salva</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance? MudDialog { get; set; }
+
+    private string _name = "";
+    private string _email = "";
+
+    void Submit()
+    {
+        var result = $"{_name} ({_email})";
+        MudDialog?.Close(DialogResult.Ok(result));
+    }
+
+    void Cancel() => MudDialog?.Cancel();
+}

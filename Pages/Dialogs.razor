@@ -1,0 +1,266 @@
+@page "/dialogs"
+@inject IDialogService DialogService
+
+<PageTitle>Dialogs - MudBlazor Learning</PageTitle>
+
+<MudText Typo="Typo.h3" Class="mb-4">Dialogs (Finestre di dialogo)</MudText>
+<MudText Typo="Typo.body1" Class="mb-4">
+    I dialogs sono modali che richiedono l'attenzione dell'utente prima di procedere.
+</MudText>
+
+<MudGrid>
+    <!-- Dialogs Base -->
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Dialog Semplice</MudText>
+
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       OnClick="OpenSimpleDialog">
+                Apri Dialog Semplice
+            </MudButton>
+
+            <MudText Typo="Typo.body2" Class="mt-4">
+                Dialog base con titolo, contenuto e azioni.
+            </MudText>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Alert Dialog -->
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Alert Dialog</MudText>
+
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Info"
+                       OnClick="OpenAlertDialog">
+                Apri Alert
+            </MudButton>
+
+            <MudText Typo="Typo.body2" Class="mt-4">
+                Dialog di alert per notifiche importanti.
+            </MudText>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Confirmation Dialog -->
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Confirmation Dialog</MudText>
+
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Warning"
+                       OnClick="OpenConfirmationDialog">
+                Apri Conferma
+            </MudButton>
+
+            @if (_confirmationResult != null)
+            {
+                <MudAlert Severity="@(_confirmationResult.Value ? Severity.Success : Severity.Info)" Class="mt-4">
+                    Risultato: @(_confirmationResult.Value ? "Confermato" : "Annullato")
+                </MudAlert>
+            }
+        </MudPaper>
+    </MudItem>
+
+    <!-- Delete Confirmation -->
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Delete Confirmation</MudText>
+
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Error"
+                       StartIcon="@Icons.Material.Filled.Delete"
+                       OnClick="OpenDeleteDialog">
+                Elimina Elemento
+            </MudButton>
+
+            @if (_deleteResult != null)
+            {
+                <MudAlert Severity="@(_deleteResult.Value ? Severity.Success : Severity.Info)" Class="mt-4">
+                    @(_deleteResult.Value ? "Elemento eliminato" : "Eliminazione annullata")
+                </MudAlert>
+            }
+        </MudPaper>
+    </MudItem>
+
+    <!-- Dialog con Form -->
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Dialog con Form</MudText>
+
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Success"
+                       OnClick="OpenFormDialog">
+                Aggiungi Utente
+            </MudButton>
+
+            @if (!string.IsNullOrEmpty(_formResult))
+            {
+                <MudAlert Severity="Severity.Success" Class="mt-4">
+                    Utente aggiunto: @_formResult
+                </MudAlert>
+            }
+        </MudPaper>
+    </MudItem>
+
+    <!-- Dialog Full Screen -->
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Dialog Full Screen</MudText>
+
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Secondary"
+                       OnClick="OpenFullScreenDialog">
+                Apri Full Screen
+            </MudButton>
+
+            <MudText Typo="Typo.body2" Class="mt-4">
+                Dialog che occupa tutto lo schermo, utile per form complessi.
+            </MudText>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Codice di esempio -->
+    <MudItem xs="12">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Esempio di Codice</MudText>
+
+            <MudPaper Class="code-block">
+                <pre>@(@"// 1. Inietta il servizio Dialog
+@inject IDialogService DialogService
+
+// 2. Apri il dialog
+private async Task OpenSimpleDialog()
+{
+    var options = new DialogOptions
+    {
+        CloseOnEscapeKey = true,
+        MaxWidth = MaxWidth.Small,
+        FullWidth = true
+    };
+
+    var dialog = await DialogService.ShowAsync<SimpleDialog>(
+        ""Titolo Dialog"",
+        options
+    );
+
+    var result = await dialog.Result;
+    if (!result.Canceled)
+    {
+        // Utente ha confermato
+    }
+}")</pre>
+            </MudPaper>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Tips per Java Developers -->
+    <MudItem xs="12">
+        <MudAlert Severity="Severity.Info">
+            <MudText Typo="Typo.h6" Class="mb-2">Per Java Developers</MudText>
+            <MudText Typo="Typo.body2">
+                I Dialogs in MudBlazor sono simili a <code>JOptionPane</code> in Swing o ai Dialog in JavaFX/Android.
+                In Blazor, i dialogs sono componenti Razor separati che vengono aperti tramite il servizio <code>IDialogService</code>,
+                simile al pattern Dependency Injection che conosci da Spring.
+                Il risultato del dialog viene restituito tramite <code>async/await</code> (simile a <code>CompletableFuture</code> in Java).
+            </MudText>
+        </MudAlert>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private bool? _confirmationResult = null;
+    private bool? _deleteResult = null;
+    private string _formResult = "";
+
+    private async Task OpenSimpleDialog()
+    {
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = true,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+
+        var parameters = new DialogParameters<SimpleDialog>
+        {
+            { x => x.ContentText, "Questo è un dialog semplice con un messaggio." }
+        };
+
+        var dialog = await DialogService.ShowAsync<SimpleDialog>("Dialog Semplice", parameters, options);
+        var result = await dialog.Result;
+
+        Console.WriteLine($"Dialog chiuso. Cancellato: {result.Canceled}");
+    }
+
+    private async Task OpenAlertDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<SimpleDialog>
+        {
+            { x => x.ContentText, "Questa è un'importante notifica che richiede la tua attenzione!" }
+        };
+
+        await DialogService.ShowAsync<SimpleDialog>("Attenzione!", parameters, options);
+    }
+
+    private async Task OpenConfirmationDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<ConfirmDialog>
+        {
+            { x => x.ContentText, "Sei sicuro di voler procedere con questa azione?" }
+        };
+
+        var dialog = await DialogService.ShowAsync<ConfirmDialog>("Conferma", parameters, options);
+        var result = await dialog.Result;
+
+        _confirmationResult = !result.Canceled;
+    }
+
+    private async Task OpenDeleteDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<ConfirmDialog>
+        {
+            { x => x.ContentText, "Sei sicuro di voler eliminare questo elemento? Questa azione non può essere annullata." },
+            { x => x.Color, Color.Error }
+        };
+
+        var dialog = await DialogService.ShowAsync<ConfirmDialog>("Conferma Eliminazione", parameters, options);
+        var result = await dialog.Result;
+
+        _deleteResult = !result.Canceled;
+    }
+
+    private async Task OpenFormDialog()
+    {
+        var options = new DialogOptions
+        {
+            MaxWidth = MaxWidth.Medium,
+            FullWidth = true
+        };
+
+        var dialog = await DialogService.ShowAsync<FormDialog>("Aggiungi Utente", options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled && result.Data != null)
+        {
+            _formResult = result.Data.ToString() ?? "";
+        }
+    }
+
+    private async Task OpenFullScreenDialog()
+    {
+        var options = new DialogOptions
+        {
+            MaxWidth = MaxWidth.ExtraExtraLarge,
+            FullWidth = true,
+            FullScreen = true,
+            CloseButton = true
+        };
+
+        await DialogService.ShowAsync<FullScreenDialog>("Dialog Full Screen", options);
+    }
+}

@@ -1,0 +1,104 @@
+@using MudBlazorLearning.Models
+
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="_form" @bind-IsValid="@_formIsValid">
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="Student.FirstName"
+                                  For="@(() => Student.FirstName)"
+                                  Label="Nome"
+                                  Variant="Variant.Outlined"
+                                  Required="true" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="Student.LastName"
+                                  For="@(() => Student.LastName)"
+                                  Label="Cognome"
+                                  Variant="Variant.Outlined"
+                                  Required="true" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="Student.Email"
+                                  For="@(() => Student.Email)"
+                                  Label="Email"
+                                  Variant="Variant.Outlined"
+                                  Required="true"
+                                  InputType="InputType.Email" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudNumericField @bind-Value="Student.Age"
+                                     For="@(() => Student.Age)"
+                                     Label="Età"
+                                     Variant="Variant.Outlined"
+                                     Min="16"
+                                     Max="100" />
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudSelect @bind-Value="Student.Course"
+                               For="@(() => Student.Course)"
+                               Label="Corso"
+                               Variant="Variant.Outlined"
+                               Required="true"
+                               T="string">
+                        @foreach (var course in Courses)
+                        {
+                            <MudSelectItem Value="@course">@course</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                @if (IsEditMode)
+                {
+                    <MudItem xs="12">
+                        <MudSwitch @bind-Checked="Student.IsActive"
+                                   Color="Color.Success"
+                                   Label="Studente Attivo" />
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Annulla</MudButton>
+        <MudButton Color="Color.Primary"
+                   Variant="Variant.Filled"
+                   OnClick="Submit"
+                   Disabled="@(!_formIsValid)">
+            @(IsEditMode ? "Aggiorna" : "Aggiungi")
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance? MudDialog { get; set; }
+
+    [Parameter]
+    public Student Student { get; set; } = new();
+
+    [Parameter]
+    public List<string> Courses { get; set; } = new();
+
+    [Parameter]
+    public bool IsEditMode { get; set; } = false;
+
+    private MudForm? _form;
+    private bool _formIsValid;
+
+    private async Task Submit()
+    {
+        await _form!.Validate();
+
+        if (_form.IsValid)
+        {
+            MudDialog?.Close(DialogResult.Ok(Student));
+        }
+    }
+
+    private void Cancel() => MudDialog?.Cancel();
+}

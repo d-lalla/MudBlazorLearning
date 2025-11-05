@@ -1,0 +1,256 @@
+@page "/validation"
+@using System.ComponentModel.DataAnnotations
+
+<PageTitle>Validazione - MudBlazor Learning</PageTitle>
+
+<MudText Typo="Typo.h3" Class="mb-4">Validazione Form</MudText>
+<MudText Typo="Typo.body1" Class="mb-4">
+    MudBlazor supporta le DataAnnotations di .NET per validare i form, simile a Bean Validation in Java.
+</MudText>
+
+<MudGrid>
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Form con Validazione</MudText>
+
+            <MudForm @ref="_form" @bind-IsValid="@_formIsValid" @bind-Errors="@_errors">
+                <MudTextField @bind-Value="_model.Username"
+                              For="@(() => _model.Username)"
+                              Label="Username"
+                              Required="true"
+                              RequiredError="Username obbligatorio!"
+                              Variant="Variant.Outlined" />
+
+                <MudTextField @bind-Value="_model.Email"
+                              For="@(() => _model.Email)"
+                              Label="Email"
+                              Required="true"
+                              RequiredError="Email obbligatoria!"
+                              Variant="Variant.Outlined"
+                              Class="mt-4" />
+
+                <MudTextField @bind-Value="_model.Password"
+                              For="@(() => _model.Password)"
+                              Label="Password"
+                              InputType="InputType.Password"
+                              Required="true"
+                              Variant="Variant.Outlined"
+                              Class="mt-4" />
+
+                <MudTextField @bind-Value="_model.ConfirmPassword"
+                              For="@(() => _model.ConfirmPassword)"
+                              Label="Conferma Password"
+                              InputType="InputType.Password"
+                              Variant="Variant.Outlined"
+                              Class="mt-4" />
+
+                <MudNumericField @bind-Value="_model.Age"
+                                 For="@(() => _model.Age)"
+                                 Label="Età"
+                                 Variant="Variant.Outlined"
+                                 Class="mt-4"
+                                 Min="0"
+                                 Max="150" />
+
+                <div class="d-flex gap-4 mt-4">
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               Disabled="@(!_formIsValid)"
+                               OnClick="@(async () => await Submit())">
+                        Registrati
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Secondary"
+                               OnClick="@(() => _form?.ResetAsync())">
+                        Reset
+                    </MudButton>
+                </div>
+            </MudForm>
+
+            @if (_formIsValid)
+            {
+                <MudAlert Severity="Severity.Success" Class="mt-4">Form valido! ✓</MudAlert>
+            }
+            else if (_errors.Length > 0)
+            {
+                <MudAlert Severity="Severity.Error" Class="mt-4">
+                    <MudText Typo="Typo.body2">Errori di validazione:</MudText>
+                    @foreach (var error in _errors)
+                    {
+                        <MudText Typo="Typo.body2">• @error</MudText>
+                    }
+                </MudAlert>
+            }
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Data Annotations utilizzate</MudText>
+
+            <MudPaper Class="code-block">
+                <pre>@(@"public class RegistrationModel
+{
+    [Required(ErrorMessage = ""Username obbligatorio"")]
+    [StringLength(20, MinimumLength = 3,
+        ErrorMessage = ""Username tra 3 e 20 caratteri"")]
+    public string Username { get; set; }
+
+    [Required(ErrorMessage = ""Email obbligatoria"")]
+    [EmailAddress(ErrorMessage = ""Email non valida"")]
+    public string Email { get; set; }
+
+    [Required]
+    [StringLength(30, MinimumLength = 6,
+        ErrorMessage = ""Password tra 6 e 30 caratteri"")]
+    public string Password { get; set; }
+
+    [Compare(nameof(Password),
+        ErrorMessage = ""Le password non corrispondono"")]
+    public string ConfirmPassword { get; set; }
+
+    [Range(18, 120,
+        ErrorMessage = ""Età tra 18 e 120"")]
+    public int Age { get; set; }
+}")</pre>
+            </MudPaper>
+
+            <MudAlert Severity="Severity.Info" Class="mt-4">
+                <MudText Typo="Typo.body2">
+                    <strong>Per Java Developers:</strong> Le DataAnnotations in C# sono come
+                    le annotazioni di Bean Validation in Java (<code>@@NotNull</code>, <code>@@Size</code>, <code>@@Email</code>).
+                    La sintassi è simile, ma in C# usi le <code>[Brackets]</code> invece di <code>@@Annotations</code>.
+                </MudText>
+            </MudAlert>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Annotazioni Comuni</MudText>
+
+            <MudSimpleTable Hover="true" Striped="true">
+                <thead>
+                    <tr>
+                        <th>Annotazione C#</th>
+                        <th>Equivalente Java</th>
+                        <th>Descrizione</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>[Required]</code></td>
+                        <td><code>@@NotNull</code> / <code>@@NotEmpty</code></td>
+                        <td>Campo obbligatorio</td>
+                    </tr>
+                    <tr>
+                        <td><code>[StringLength(max, MinimumLength=min)]</code></td>
+                        <td><code>@@Size(min=, max=)</code></td>
+                        <td>Lunghezza stringa</td>
+                    </tr>
+                    <tr>
+                        <td><code>[EmailAddress]</code></td>
+                        <td><code>@@Email</code></td>
+                        <td>Valida formato email</td>
+                    </tr>
+                    <tr>
+                        <td><code>[Range(min, max)]</code></td>
+                        <td><code>@@Min</code> / <code>@@Max</code></td>
+                        <td>Range numerico</td>
+                    </tr>
+                    <tr>
+                        <td><code>[Compare("Property")]</code></td>
+                        <td>Custom validator</td>
+                        <td>Confronta due proprietà</td>
+                    </tr>
+                    <tr>
+                        <td><code>[RegularExpression(pattern)]</code></td>
+                        <td><code>@@Pattern</code></td>
+                        <td>Valida con regex</td>
+                    </tr>
+                    <tr>
+                        <td><code>[Url]</code></td>
+                        <td>Custom validator</td>
+                        <td>Valida URL</td>
+                    </tr>
+                    <tr>
+                        <td><code>[Phone]</code></td>
+                        <td>Custom validator</td>
+                        <td>Valida numero telefono</td>
+                    </tr>
+                </tbody>
+            </MudSimpleTable>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12">
+        <MudAlert Severity="Severity.Success">
+            <MudText Typo="Typo.h6" Class="mb-2">Confronto con Java</MudText>
+            <MudText Typo="Typo.body2">
+                In Java (Spring/Jakarta):
+            </MudText>
+            <MudPaper Class="code-block my-2">
+                <pre>@(@"public class User {
+    @NotNull @Size(min=3, max=20)
+    private String username;
+
+    @Email
+    private String email;
+}")</pre>
+            </MudPaper>
+            <MudText Typo="Typo.body2">
+                In C# (Blazor):
+            </MudText>
+            <MudPaper Class="code-block my-2">
+                <pre>@(@"public class User {
+    [Required]
+    [StringLength(20, MinimumLength = 3)]
+    public string Username { get; set; }
+
+    [EmailAddress]
+    public string Email { get; set; }
+}")</pre>
+            </MudPaper>
+        </MudAlert>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private MudForm? _form;
+    private bool _formIsValid;
+    private string[] _errors = Array.Empty<string>();
+    private RegistrationModel _model = new();
+
+    private async Task Submit()
+    {
+        await _form!.Validate();
+
+        if (_form.IsValid)
+        {
+            // Qui andresti a processare i dati (es. chiamata API)
+            Console.WriteLine($"Registrazione: {_model.Username}, {_model.Email}");
+        }
+    }
+
+    // Model con DataAnnotations (simile a Bean Validation in Java)
+    public class RegistrationModel
+    {
+        [Required(ErrorMessage = "Username è obbligatorio")]
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "Username deve essere tra 3 e 20 caratteri")]
+        public string Username { get; set; } = "";
+
+        [Required(ErrorMessage = "Email è obbligatoria")]
+        [EmailAddress(ErrorMessage = "Formato email non valido")]
+        public string Email { get; set; } = "";
+
+        [Required]
+        [StringLength(30, MinimumLength = 6, ErrorMessage = "Password deve essere tra 6 e 30 caratteri")]
+        public string Password { get; set; } = "";
+
+        [Compare(nameof(Password), ErrorMessage = "Le password non corrispondono")]
+        public string ConfirmPassword { get; set; } = "";
+
+        [Range(18, 120, ErrorMessage = "Devi avere tra 18 e 120 anni")]
+        public int Age { get; set; } = 18;
+    }
+}

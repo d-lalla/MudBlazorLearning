@@ -1,0 +1,38 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Fullscreen" Class="mr-2" />
+            Dialog Full Screen
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1" Class="mb-4">
+            Questo dialog occupa tutto lo schermo. È utile per form complessi o contenuti estesi.
+        </MudText>
+
+        <MudGrid>
+            <MudItem xs="12" md="6">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudText Typo="Typo.h6" Class="mb-2">Sezione 1</MudText>
+                    <MudText>Contenuto della prima sezione...</MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudText Typo="Typo.h6" Class="mb-2">Sezione 2</MudText>
+                    <MudText>Contenuto della seconda sezione...</MudText>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Chiudi</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance? MudDialog { get; set; }
+
+    void Close() => MudDialog?.Close(DialogResult.Ok(true));
+}

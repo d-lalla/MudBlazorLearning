@@ -1,0 +1,285 @@
+@page "/students"
+@using MudBlazorLearning.Models
+@using MudBlazorLearning.Services
+@inject StudentService StudentService
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+
+<PageTitle>CRUD Studenti - MudBlazor Learning</PageTitle>
+
+<MudText Typo="Typo.h3" Class="mb-4">Gestione Studenti (CRUD Completo)</MudText>
+<MudText Typo="Typo.body1" Class="mb-4">
+    Esempio completo di operazioni CRUD (Create, Read, Update, Delete) con MudBlazor.
+</MudText>
+
+<MudPaper Elevation="2" Class="pa-4">
+    <!-- Toolbar con azioni -->
+    <div class="d-flex justify-space-between align-center mb-4">
+        <MudTextField @bind-Value="_searchString"
+                      Placeholder="Cerca per nome..."
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"
+                      Class="mt-0"
+                      Style="max-width: 300px;" />
+
+        <MudButton Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   StartIcon="@Icons.Material.Filled.Add"
+                   OnClick="OpenAddDialog">
+            Aggiungi Studente
+        </MudButton>
+    </div>
+
+    <!-- Filtri -->
+    <div class="d-flex gap-2 mb-4">
+        <MudChip Label="true"
+                 Color="@(_filterCourse == null ? Color.Primary : Color.Default)"
+                 OnClick="@(() => FilterByCourse(null))">
+            Tutti (@_students.Count)
+        </MudChip>
+        @foreach (var course in _courses)
+        {
+            var count = _students.Count(s => s.Course == course);
+            <MudChip Label="true"
+                     Color="@(_filterCourse == course ? Color.Primary : Color.Default)"
+                     OnClick="@(() => FilterByCourse(course))">
+                @course (@count)
+            </MudChip>
+        }
+    </div>
+
+    <!-- Tabella studenti -->
+    <MudTable Items="@_filteredStudents"
+              Hover="true"
+              Striped="true"
+              Dense="true"
+              Loading="@_loading"
+              LoadingProgressColor="Color.Primary"
+              @bind-SelectedItem="_selectedStudent">
+        <HeaderContent>
+            <MudTh>ID</MudTh>
+            <MudTh>Nome Completo</MudTh>
+            <MudTh>Email</MudTh>
+            <MudTh>Età</MudTh>
+            <MudTh>Corso</MudTh>
+            <MudTh>Data Iscrizione</MudTh>
+            <MudTh>Stato</MudTh>
+            <MudTh>Azioni</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="ID">@context.Id</MudTd>
+            <MudTd DataLabel="Nome">
+                <div class="d-flex align-center">
+                    <MudAvatar Color="Color.Primary" Size="Size.Small" Class="mr-2">
+                        @context.FirstName[0]@context.LastName[0]
+                    </MudAvatar>
+                    @context.FullName
+                </div>
+            </MudTd>
+            <MudTd DataLabel="Email">@context.Email</MudTd>
+            <MudTd DataLabel="Età">@context.Age</MudTd>
+            <MudTd DataLabel="Corso">
+                <MudChip Size="Size.Small" Color="Color.Info">@context.Course</MudChip>
+            </MudTd>
+            <MudTd DataLabel="Data Iscrizione">@context.EnrollmentDate.ToString("dd/MM/yyyy")</MudTd>
+            <MudTd DataLabel="Stato">
+                <MudChip Size="Size.Small"
+                         Color="@(context.IsActive ? Color.Success : Color.Default)">
+                    @(context.IsActive ? "Attivo" : "Inattivo")
+                </MudChip>
+            </MudTd>
+            <MudTd DataLabel="Azioni">
+                <MudIconButton Icon="@Icons.Material.Filled.Visibility"
+                               Color="Color.Info"
+                               Size="Size.Small"
+                               OnClick="@(() => OpenViewDialog(context))" />
+                <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                               Color="Color.Primary"
+                               Size="Size.Small"
+                               OnClick="@(() => OpenEditDialog(context))" />
+                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                               Color="Color.Error"
+                               Size="Size.Small"
+                               OnClick="@(() => OpenDeleteDialog(context))" />
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[]{5, 10, 25, 50}" />
+        </PagerContent>
+    </MudTable>
+
+    @if (!_filteredStudents.Any())
+    {
+        <MudAlert Severity="Severity.Info" Class="mt-4">
+            Nessuno studente trovato. @(_searchString != "" ? "Prova a modificare i criteri di ricerca." : "Aggiungi il primo studente!")
+        </MudAlert>
+    }
+</MudPaper>
+
+<!-- Statistiche -->
+<MudGrid Class="mt-4">
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.body2" Color="Color.Primary">Totale Studenti</MudText>
+            <MudText Typo="Typo.h4">@_students.Count</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.body2" Color="Color.Success">Studenti Attivi</MudText>
+            <MudText Typo="Typo.h4">@_students.Count(s => s.IsActive)</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.body2" Color="Color.Info">Età Media</MudText>
+            <MudText Typo="Typo.h4">@(_students.Any() ? _students.Average(s => s.Age).ToString("N1") : "0")</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.body2" Color="Color.Secondary">Corsi Attivi</MudText>
+            <MudText Typo="Typo.h4">@_courses.Count</MudText>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private List<Student> _students = new();
+    private List<Student> _filteredStudents = new();
+    private Student? _selectedStudent = null;
+    private bool _loading = false;
+    private string _searchString = "";
+    private string? _filterCourse = null;
+
+    // Lista corsi disponibili
+    private List<string> _courses = new() { "Informatica", "Ingegneria", "Matematica", "Fisica", "Chimica" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadStudents();
+    }
+
+    private async Task LoadStudents()
+    {
+        _loading = true;
+        _students = await StudentService.GetAllAsync();
+        ApplyFilters();
+        _loading = false;
+    }
+
+    private void ApplyFilters()
+    {
+        // Filtra per corso
+        var filtered = _filterCourse == null
+            ? _students
+            : _students.Where(s => s.Course == _filterCourse).ToList();
+
+        // Filtra per ricerca testuale
+        if (!string.IsNullOrWhiteSpace(_searchString))
+        {
+            filtered = filtered.Where(s =>
+                s.FirstName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ||
+                s.LastName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ||
+                s.Email.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
+        _filteredStudents = filtered;
+    }
+
+    private void FilterByCourse(string? course)
+    {
+        _filterCourse = course;
+        ApplyFilters();
+    }
+
+    private async Task OpenAddDialog()
+    {
+        var parameters = new DialogParameters<StudentDialog>
+        {
+            { x => x.Student, new Student() },
+            { x => x.Courses, _courses },
+            { x => x.IsEditMode, false }
+        };
+
+        var dialog = await DialogService.ShowAsync<StudentDialog>("Aggiungi Studente", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled && result.Data is Student newStudent)
+        {
+            await StudentService.AddAsync(newStudent);
+            await LoadStudents();
+            Snackbar.Add($"Studente {newStudent.FullName} aggiunto con successo", Severity.Success);
+        }
+    }
+
+    private async Task OpenEditDialog(Student student)
+    {
+        // Crea una copia per evitare di modificare l'originale prima del salvataggio
+        var studentCopy = new Student
+            {
+                Id = student.Id,
+                FirstName = student.FirstName,
+                LastName = student.LastName,
+                Email = student.Email,
+                Age = student.Age,
+                Course = student.Course,
+                EnrollmentDate = student.EnrollmentDate,
+                IsActive = student.IsActive
+            };
+
+        var parameters = new DialogParameters<StudentDialog>
+        {
+            { x => x.Student, studentCopy },
+            { x => x.Courses, _courses },
+            { x => x.IsEditMode, true }
+        };
+
+        var dialog = await DialogService.ShowAsync<StudentDialog>("Modifica Studente", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled && result.Data is Student updatedStudent)
+        {
+            await StudentService.UpdateAsync(updatedStudent);
+            await LoadStudents();
+            Snackbar.Add($"Studente {updatedStudent.FullName} aggiornato con successo", Severity.Success);
+        }
+    }
+
+    private async Task OpenViewDialog(Student student)
+    {
+        var parameters = new DialogParameters<StudentViewDialog>
+        {
+            { x => x.Student, student }
+        };
+
+        await DialogService.ShowAsync<StudentViewDialog>("Dettagli Studente", parameters);
+    }
+
+    private async Task OpenDeleteDialog(Student student)
+    {
+        var parameters = new DialogParameters<ConfirmDialog>
+        {
+            { x => x.ContentText, $"Sei sicuro di voler eliminare lo studente {student.FullName}? Questa azione non può essere annullata." },
+            { x => x.Color, Color.Error }
+        };
+
+        var dialog = await DialogService.ShowAsync<ConfirmDialog>("Conferma Eliminazione", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await StudentService.DeleteAsync(student.Id);
+            await LoadStudents();
+            Snackbar.Add($"Studente {student.FullName} eliminato", Severity.Info);
+        }
+    }
+
+    // Quando cambia la ricerca, applica i filtri
+    protected override void OnParametersSet()
+    {
+        ApplyFilters();
+    }
+}

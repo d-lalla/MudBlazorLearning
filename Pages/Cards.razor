@@ -1,0 +1,219 @@
+@page "/cards"
+
+<PageTitle>Card - MudBlazor Learning</PageTitle>
+
+<MudText Typo="Typo.h3" Class="mb-4">Card (Schede)</MudText>
+<MudText Typo="Typo.body1" Class="mb-4">
+    Le Card sono container versatili per raggruppare contenuti correlati.
+</MudText>
+
+<MudGrid>
+    <!-- Card Base -->
+    <MudItem xs="12" md="4">
+        <MudCard>
+            <MudCardContent>
+                <MudText Typo="Typo.h6">Card Base</MudText>
+                <MudText Typo="Typo.body2">
+                    Questa è una card base con solo contenuto.
+                </MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <!-- Card con Header -->
+    <MudItem xs="12" md="4">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Card con Header</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudText Typo="Typo.body2">
+                    Header separato per titoli e sottotitoli.
+                </MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <!-- Card con Actions -->
+    <MudItem xs="12" md="4">
+        <MudCard>
+            <MudCardContent>
+                <MudText Typo="Typo.h6">Card con Azioni</MudText>
+                <MudText Typo="Typo.body2">
+                    Bottoni nella sezione Actions.
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary">Azione</MudButton>
+                <MudButton Variant="Variant.Text" Color="Color.Primary">Altro</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <!-- Card con Avatar -->
+    <MudItem xs="12" md="6">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderAvatar>
+                    <MudAvatar Color="Color.Secondary">MP</MudAvatar>
+                </CardHeaderAvatar>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.body1">Mario Possi</MudText>
+                    <MudText Typo="Typo.body2">Sviluppatore</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Default" />
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudText Typo="Typo.body2">
+                    Card con avatar, perfetta per profili utente o elenchi di persone.
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary">Segui</MudButton>
+                <MudButton Variant="Variant.Text" Color="Color.Primary">Messaggio</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <!-- Card con Immagine (simulata) -->
+    <MudItem xs="12" md="6">
+        <MudCard>
+            <MudCardMedia Image="https://via.placeholder.com/400x200/2196F3/FFFFFF?text=Immagine+Card" Height="200" />
+            <MudCardContent>
+                <MudText Typo="Typo.h6">Card con Immagine</MudText>
+                <MudText Typo="Typo.body2">
+                    Le immagini in cima alla card sono ideali per gallery o articoli.
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Error" />
+                <MudIconButton Icon="@Icons.Material.Filled.Share" Color="Color.Default" />
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <!-- Card con Elevation -->
+    <MudItem xs="12">
+        <MudText Typo="Typo.h6" Class="mb-2">Elevation (Ombreggiatura)</MudText>
+        <MudGrid>
+            <MudItem xs="6" md="3">
+                <MudCard Elevation="0">
+                    <MudCardContent>
+                        <MudText>Elevation 0</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="6" md="3">
+                <MudCard Elevation="5">
+                    <MudCardContent>
+                        <MudText>Elevation 5</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="6" md="3">
+                <MudCard Elevation="10">
+                    <MudCardContent>
+                        <MudText>Elevation 10</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="6" md="3">
+                <MudCard Elevation="25">
+                    <MudCardContent>
+                        <MudText>Elevation 25</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+
+    <!-- Card Outlined -->
+    <MudItem xs="12" md="4">
+        <MudCard Outlined="true">
+            <MudCardContent>
+                <MudText Typo="Typo.h6">Card Outlined</MudText>
+                <MudText Typo="Typo.body2">
+                    Con bordo invece dell'ombreggiatura.
+                </MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <!-- Card Squared -->
+    <MudItem xs="12" md="4">
+        <MudCard Square="true">
+            <MudCardContent>
+                <MudText Typo="Typo.h6">Card Squared</MudText>
+                <MudText Typo="Typo.body2">
+                    Senza bordi arrotondati.
+                </MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <!-- Card Example: Product -->
+    <MudItem xs="12" md="4">
+        <MudCard Elevation="4">
+            <MudCardMedia Image="https://via.placeholder.com/300x200/4CAF50/FFFFFF?text=Prodotto" Height="200" />
+            <MudCardContent>
+                <MudText Typo="Typo.h5">Laptop Pro</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">
+                    Hardware di ultima generazione
+                </MudText>
+                <MudRating ReadOnly="true" SelectedValue="4" Class="my-2" />
+                <MudText Typo="Typo.h6" Color="Color.Primary">€1,299</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">
+                    Aggiungi al Carrello
+                </MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <!-- Codice di esempio -->
+    <MudItem xs="12">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-2">Esempio di Codice</MudText>
+            <MudPaper Class="code-block">
+                <pre>@(@"<MudCard>
+    <MudCardHeader>
+        <CardHeaderAvatar>
+            <MudAvatar Color=""Color.Secondary"">MP</MudAvatar>
+        </CardHeaderAvatar>
+        <CardHeaderContent>
+            <MudText Typo=""Typo.body1"">Mario Rossi</MudText>
+            <MudText Typo=""Typo.body2"">Sviluppatore</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudText>Contenuto della card...</MudText>
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Variant=""Variant.Text"" Color=""Color.Primary"">Azione</MudButton>
+    </MudCardActions>
+</MudCard>")</pre>
+            </MudPaper>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Tips per Java Developers -->
+    <MudItem xs="12">
+        <MudAlert Severity="Severity.Success">
+            <MudText Typo="Typo.h6" Class="mb-2">Tips per Java Developers</MudText>
+            <MudText Typo="Typo.body2">
+                Le Card in MudBlazor sono simili ai Panel in Swing o ai Card in Material Design per Android.
+                Sono componenti compositi: puoi annidare <code>MudCardHeader</code>, <code>MudCardContent</code>,
+                e <code>MudCardActions</code> per strutturare il layout. Pensa a loro come dei "container" specializzati.
+            </MudText>
+        </MudAlert>
+    </MudItem>
+</MudGrid>
+
+@code {
+
+}

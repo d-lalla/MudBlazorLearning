@@ -1,0 +1,268 @@
+@page "/snackbars"
+@inject ISnackbar Snackbar
+
+<PageTitle>Snackbars - MudBlazor Learning</PageTitle>
+
+<MudText Typo="Typo.h3" Class="mb-4">Snackbars (Notifiche)</MudText>
+<MudText Typo="Typo.body1" Class="mb-4">
+    Gli Snackbar sono notifiche brevi che appaiono temporaneamente nella parte bassa dello schermo.
+</MudText>
+
+<MudGrid>
+    <!-- Snackbar Base -->
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Snackbar Base</MudText>
+
+            <div class="d-flex flex-column gap-2">
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Default"
+                           OnClick="@(() => Snackbar.Add("Questo è uno snackbar normale"))">
+                    Normale
+                </MudButton>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           OnClick="@(() => Snackbar.Add("Snackbar di default", Severity.Normal))">
+                    Normal (Default)
+                </MudButton>
+            </div>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Snackbar con Severity -->
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Livelli di Severity</MudText>
+
+            <div class="d-flex flex-column gap-2">
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Info"
+                           OnClick="@(() => Snackbar.Add("Informazione utile", Severity.Info))">
+                    Info
+                </MudButton>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Success"
+                           OnClick="@(() => Snackbar.Add("Operazione completata con successo!", Severity.Success))">
+                    Success
+                </MudButton>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Warning"
+                           OnClick="@(() => Snackbar.Add("Attenzione: verifica i dati", Severity.Warning))">
+                    Warning
+                </MudButton>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Error"
+                           OnClick="@(() => Snackbar.Add("Errore durante l'operazione", Severity.Error))">
+                    Error
+                </MudButton>
+            </div>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Snackbar con Azioni -->
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Con Azioni</MudText>
+
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       OnClick="ShowSnackbarWithAction">
+                Snackbar con Azione
+            </MudButton>
+
+            @if (_actionClicked)
+            {
+                <MudAlert Severity="Severity.Success" Class="mt-4">
+                    Azione eseguita!
+                </MudAlert>
+            }
+        </MudPaper>
+    </MudItem>
+
+    <!-- Snackbar con Durata -->
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Durata Personalizzata</MudText>
+
+            <div class="d-flex flex-column gap-2">
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Secondary"
+                           OnClick="@(() => ShowSnackbarWithDuration(1000))">
+                    1 secondo
+                </MudButton>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Secondary"
+                           OnClick="@(() => ShowSnackbarWithDuration(3000))">
+                    3 secondi
+                </MudButton>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Secondary"
+                           OnClick="@(() => ShowSnackbarWithDuration(10000))">
+                    10 secondi
+                </MudButton>
+            </div>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Posizioni -->
+    <MudItem xs="12">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Posizioni</MudText>
+            <MudText Typo="Typo.body2" Class="mb-2">
+                La posizione si configura globalmente in MainLayout, ma eccone alcuni esempi:
+            </MudText>
+
+            <MudGrid>
+                <MudItem xs="6" md="3">
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               FullWidth="true"
+                               OnClick="@(() => Snackbar.Add("Top Left", Severity.Info))">
+                        Top Left
+                    </MudButton>
+                </MudItem>
+                <MudItem xs="6" md="3">
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               FullWidth="true"
+                               OnClick="@(() => Snackbar.Add("Top Center", Severity.Info))">
+                        Top Center
+                    </MudButton>
+                </MudItem>
+                <MudItem xs="6" md="3">
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               FullWidth="true"
+                               OnClick="@(() => Snackbar.Add("Top Right", Severity.Info))">
+                        Top Right
+                    </MudButton>
+                </MudItem>
+                <MudItem xs="6" md="3">
+                    <MudButton Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               FullWidth="true"
+                               OnClick="@(() => Snackbar.Add("Bottom Left", Severity.Info))">
+                        Bottom (Default)
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Esempi pratici -->
+    <MudItem xs="12">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Esempi Pratici</MudText>
+
+            <div class="d-flex flex-wrap gap-2">
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Success"
+                           StartIcon="@Icons.Material.Filled.Save"
+                           OnClick="@(() => Snackbar.Add("Dati salvati con successo", Severity.Success))">
+                    Salva
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Error"
+                           StartIcon="@Icons.Material.Filled.Delete"
+                           OnClick="@(() => Snackbar.Add("Elemento eliminato", Severity.Error))">
+                    Elimina
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Info"
+                           StartIcon="@Icons.Material.Filled.CloudUpload"
+                           OnClick="@(() => Snackbar.Add("Upload in corso...", Severity.Info))">
+                    Upload
+                </MudButton>
+
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Warning"
+                           StartIcon="@Icons.Material.Filled.Warning"
+                           OnClick="@(() => Snackbar.Add("Connessione instabile", Severity.Warning))">
+                    Warning
+                </MudButton>
+            </div>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Codice di esempio -->
+    <MudItem xs="12">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Esempio di Codice</MudText>
+
+            <MudPaper Class="code-block">
+                <pre>@(@"// 1. Inietta il servizio Snackbar
+@inject ISnackbar Snackbar
+
+// 2. Mostra uno snackbar
+Snackbar.Add(""Messaggio"", Severity.Success);
+
+// 3. Con configurazione personalizzata
+Snackbar.Add(
+    ""Operazione completata"",
+    Severity.Success,
+    config =>
+    {
+        config.VisibleStateDuration = 2000; // 2 secondi
+        config.ShowCloseIcon = true;
+        config.Action = ""Annulla"";
+        config.ActionColor = Color.Primary;
+        config.Onclick = snackbar =>
+        {
+            // Azione al click
+            return Task.CompletedTask;
+        };
+    }
+);")</pre>
+            </MudPaper>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Tips per Java Developers -->
+    <MudItem xs="12">
+        <MudAlert Severity="Severity.Info">
+            <MudText Typo="Typo.h6" Class="mb-2">Per Java Developers</MudText>
+            <MudText Typo="Typo.body2">
+                Gli Snackbar sono simili ai <code>Toast</code> in Android o alle notifiche di JavaFX.
+                Il servizio <code>ISnackbar</code> viene iniettato tramite Dependency Injection (come in Spring),
+                e puoi usarlo ovunque nel tuo componente. Gli snackbar sono ideali per feedback rapidi
+                all'utente senza interrompere il flusso di lavoro.
+            </MudText>
+        </MudAlert>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private bool _actionClicked = false;
+
+    private void ShowSnackbarWithAction()
+    {
+        Snackbar.Add(
+            "Messaggio con azione",
+            Severity.Normal,
+            config =>
+            {
+                config.Action = "Annulla";
+                config.ActionColor = Color.Primary;
+                config.Onclick = snackbar =>
+                {
+                    _actionClicked = true;
+                    return Task.CompletedTask;
+                };
+            }
+        );
+    }
+
+    private void ShowSnackbarWithDuration(int milliseconds)
+    {
+        Snackbar.Add(
+            $"Questo snackbar durerà {milliseconds / 1000} secondi",
+            Severity.Info,
+            config =>
+            {
+                config.VisibleStateDuration = milliseconds;
+            }
+        );
+    }
+}

@@ -1,0 +1,169 @@
+@page "/dashboard"
+
+<PageTitle>Dashboard - MudBlazor Learning</PageTitle>
+
+<MudText Typo="Typo.h3" Class="mb-4">Dashboard</MudText>
+<MudText Typo="Typo.body1" Class="mb-4">
+    Esempio di dashboard con statistiche, grafici e componenti comuni.
+</MudText>
+
+<MudGrid>
+    <!-- Cards con statistiche -->
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.body2" Color="Color.Primary">Utenti Totali</MudText>
+            <MudText Typo="Typo.h4">1,234</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Success">
+                <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Size="Size.Small" />
+                +12% questo mese
+            </MudText>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.body2" Color="Color.Secondary">Vendite</MudText>
+            <MudText Typo="Typo.h4">€45,678</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Success">
+                <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Size="Size.Small" />
+                +8% questo mese
+            </MudText>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.body2" Color="Color.Tertiary">Ordini</MudText>
+            <MudText Typo="Typo.h4">567</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Error">
+                <MudIcon Icon="@Icons.Material.Filled.TrendingDown" Size="Size.Small" />
+                -3% questo mese
+            </MudText>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.body2" Color="Color.Info">Conversione</MudText>
+            <MudText Typo="Typo.h4">3.24%</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Success">
+                <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Size="Size.Small" />
+                +0.5% questo mese
+            </MudText>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Grafico con Chart (simulato con progress bars per semplicità) -->
+    <MudItem xs="12" md="8">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Vendite Mensili</MudText>
+            @foreach (var month in _monthlyData)
+            {
+                <MudText Typo="Typo.body2">@month.Month</MudText>
+                <MudProgressLinear Color="Color.Primary" Size="Size.Large" Value="@month.Percentage" Class="my-2" />
+            }
+        </MudPaper>
+    </MudItem>
+
+    <!-- Lista attività recenti -->
+    <MudItem xs="12" md="4">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Attività Recenti</MudText>
+            <MudList Dense="true">
+                @foreach (var activity in _recentActivities)
+                {
+                    <MudListItem Icon="@activity.Icon" IconColor="@activity.Color">
+                        <MudText Typo="Typo.body2">@activity.Description</MudText>
+                        <MudText Typo="Typo.caption" Color="Color.Secondary">@activity.Time</MudText>
+                    </MudListItem>
+                    <MudDivider />
+                }
+            </MudList>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Tabella prodotti top -->
+    <MudItem xs="12">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Top Prodotti</MudText>
+            <MudTable Items="@_topProducts" Hover="true" Striped="true" Dense="true">
+                <HeaderContent>
+                    <MudTh>Prodotto</MudTh>
+                    <MudTh>Categoria</MudTh>
+                    <MudTh>Vendite</MudTh>
+                    <MudTh>Fatturato</MudTh>
+                    <MudTh>Trend</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Prodotto">@context.Name</MudTd>
+                    <MudTd DataLabel="Categoria">
+                        <MudChip Size="Size.Small" Color="@context.CategoryColor">@context.Category</MudChip>
+                    </MudTd>
+                    <MudTd DataLabel="Vendite">@context.Sales</MudTd>
+                    <MudTd DataLabel="Fatturato">€@context.Revenue.ToString("N0")</MudTd>
+                    <MudTd DataLabel="Trend">
+                        <MudIcon Icon="@(context.Trending ? Icons.Material.Filled.TrendingUp : Icons.Material.Filled.TrendingDown)"
+                                 Color="@(context.Trending ? Color.Success : Color.Error)" />
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    // Dati di esempio per il grafico mensile
+    private List<MonthlyData> _monthlyData = new()
+    {
+        new MonthlyData { Month = "Gennaio", Percentage = 75 },
+        new MonthlyData { Month = "Febbraio", Percentage = 82 },
+        new MonthlyData { Month = "Marzo", Percentage = 90 },
+        new MonthlyData { Month = "Aprile", Percentage = 68 },
+        new MonthlyData { Month = "Maggio", Percentage = 95 },
+        new MonthlyData { Month = "Giugno", Percentage = 100 }
+    };
+
+    // Attività recenti
+    private List<RecentActivity> _recentActivities = new()
+    {
+        new RecentActivity { Icon = Icons.Material.Filled.ShoppingCart, Color = Color.Success, Description = "Nuovo ordine #1234", Time = "2 min fa" },
+        new RecentActivity { Icon = Icons.Material.Filled.Person, Color = Color.Info, Description = "Nuovo utente registrato", Time = "15 min fa" },
+        new RecentActivity { Icon = Icons.Material.Filled.Payment, Color = Color.Warning, Description = "Pagamento in sospeso", Time = "1 ora fa" },
+        new RecentActivity { Icon = Icons.Material.Filled.LocalShipping, Color = Color.Primary, Description = "Spedizione completata", Time = "2 ore fa" }
+    };
+
+    // Prodotti top
+    private List<TopProduct> _topProducts = new()
+    {
+        new TopProduct { Name = "Laptop Pro", Category = "Elettronica", CategoryColor = Color.Primary, Sales = 245, Revenue = 245000, Trending = true },
+        new TopProduct { Name = "Smartphone X", Category = "Elettronica", CategoryColor = Color.Primary, Sales = 567, Revenue = 567000, Trending = true },
+        new TopProduct { Name = "Scrivania Ergonomica", Category = "Arredamento", CategoryColor = Color.Secondary, Sales = 123, Revenue = 36900, Trending = false },
+        new TopProduct { Name = "Sedia Gaming", Category = "Arredamento", CategoryColor = Color.Secondary, Sales = 189, Revenue = 56700, Trending = true },
+        new TopProduct { Name = "Monitor 4K", Category = "Elettronica", CategoryColor = Color.Primary, Sales = 334, Revenue = 167000, Trending = true }
+    };
+
+    // Classi per i dati (in un'app reale sarebbero in Models/)
+    public class MonthlyData
+    {
+        public string Month { get; set; } = "";
+        public double Percentage { get; set; }
+    }
+
+    public class RecentActivity
+    {
+        public string Icon { get; set; } = "";
+        public Color Color { get; set; }
+        public string Description { get; set; } = "";
+        public string Time { get; set; } = "";
+    }
+
+    public class TopProduct
+    {
+        public string Name { get; set; } = "";
+        public string Category { get; set; } = "";
+        public Color CategoryColor { get; set; }
+        public int Sales { get; set; }
+        public decimal Revenue { get; set; }
+        public bool Trending { get; set; }
+    }
+}

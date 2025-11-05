@@ -1,0 +1,139 @@
+@page "/typography"
+
+<PageTitle>Tipografia - MudBlazor Learning</PageTitle>
+
+<MudText Typo="Typo.h3" Class="mb-4">Tipografia</MudText>
+<MudText Typo="Typo.body1" Class="mb-4">
+    MudBlazor offre un sistema completo di tipografia basato su Material Design.
+</MudText>
+
+<MudGrid>
+    <!-- Headings -->
+    <MudItem xs="12">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Headings (Titoli)</MudText>
+
+            <MudText Typo="Typo.h1" Class="mb-2">h1. Heading molto grande</MudText>
+            <MudText Typo="Typo.h2" Class="mb-2">h2. Heading grande</MudText>
+            <MudText Typo="Typo.h3" Class="mb-2">h3. Heading medio-grande</MudText>
+            <MudText Typo="Typo.h4" Class="mb-2">h4. Heading medio</MudText>
+            <MudText Typo="Typo.h5" Class="mb-2">h5. Heading medio-piccolo</MudText>
+            <MudText Typo="Typo.h6" Class="mb-2">h6. Heading piccolo</MudText>
+
+            <MudPaper Class="code-block mt-4">
+                <pre>@(@"<MudText Typo=""Typo.h1"">h1. Heading molto grande</MudText>
+<MudText Typo=""Typo.h2"">h2. Heading grande</MudText>
+<MudText Typo=""Typo.h3"">h3. Heading medio-grande</MudText>")</pre>
+            </MudPaper>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Body Text -->
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Body Text</MudText>
+
+            <MudText Typo="Typo.body1" Class="mb-2">
+                body1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Questo è il testo standard per paragrafi.
+            </MudText>
+
+            <MudText Typo="Typo.body2" Class="mb-2">
+                body2. Testo leggermente più piccolo, utile per descrizioni secondarie.
+            </MudText>
+
+            <MudText Typo="Typo.subtitle1" Class="mb-2">
+                subtitle1. Sottotitolo grande
+            </MudText>
+
+            <MudText Typo="Typo.subtitle2" Class="mb-2">
+                subtitle2. Sottotitolo piccolo
+            </MudText>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Altri stili -->
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Altri Stili</MudText>
+
+            <MudText Typo="Typo.button" Class="mb-2">BUTTON TEXT - Testo maiuscolo</MudText>
+            <MudText Typo="Typo.caption" Class="mb-2">caption. Testo molto piccolo per note</MudText>
+            <MudText Typo="Typo.overline" Class="mb-2">OVERLINE - SOPRA I TITOLI</MudText>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Colori del testo -->
+    <MudItem xs="12">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Colori del Testo</MudText>
+
+            <div class="d-flex flex-column gap-2">
+                <MudText Typo="Typo.body1" Color="Color.Default">Default - Colore di default</MudText>
+                <MudText Typo="Typo.body1" Color="Color.Primary">Primary - Colore primario</MudText>
+                <MudText Typo="Typo.body1" Color="Color.Secondary">Secondary - Colore secondario</MudText>
+                <MudText Typo="Typo.body1" Color="Color.Tertiary">Tertiary - Colore terziario</MudText>
+                <MudText Typo="Typo.body1" Color="Color.Info">Info - Informazioni</MudText>
+                <MudText Typo="Typo.body1" Color="Color.Success">Success - Successo</MudText>
+                <MudText Typo="Typo.body1" Color="Color.Warning">Warning - Attenzione</MudText>
+                <MudText Typo="Typo.body1" Color="Color.Error">Error - Errore</MudText>
+            </div>
+
+            <MudPaper Class="code-block mt-4">
+                <pre>@(@"<MudText Color=""Color.Primary"">Testo Primary</MudText>
+<MudText Color=""Color.Error"">Testo Error</MudText>")</pre>
+            </MudPaper>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Allineamento -->
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Allineamento</MudText>
+
+            <MudText Typo="Typo.body1" Align="Align.Left" Class="mb-2">Testo allineato a sinistra</MudText>
+            <MudText Typo="Typo.body1" Align="Align.Center" Class="mb-2">Testo centrato</MudText>
+            <MudText Typo="Typo.body1" Align="Align.Right" Class="mb-2">Testo allineato a destra</MudText>
+            <MudText Typo="Typo.body1" Align="Align.Justify" Class="mb-2">
+                Testo giustificato. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </MudText>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Formattazione inline -->
+    <MudItem xs="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Formattazione Inline</MudText>
+
+            <MudText Typo="Typo.body1" Class="mb-2">
+                Testo con <strong>grassetto</strong> usando &lt;strong&gt;
+            </MudText>
+
+            <MudText Typo="Typo.body1" Class="mb-2">
+                Testo con <em>corsivo</em> usando &lt;em&gt;
+            </MudText>
+
+            <MudText Typo="Typo.body1" Class="mb-2">
+                Testo con <code>codice inline</code> usando &lt;code&gt;
+            </MudText>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Concetti per Java Developers -->
+    <MudItem xs="12">
+        <MudAlert Severity="Severity.Info" Variant="Variant.Filled">
+            <MudText Typo="Typo.h6" Class="mb-2">Per Java Developers</MudText>
+            <MudText Typo="Typo.body2">
+                In Blazor, i componenti come <code>MudText</code> sono simili ai componenti JSF o Vaadin in Java.
+                La proprietà <code>Typo</code> è come un enum (infatti in C# è un <code>enum</code>), e
+                puoi combinarla con <code>Color</code> e <code>Align</code> per ottenere lo stile desiderato.
+                Nota la sintassi <code>@@</code> per accedere ai valori enum: <code>Typo.h1</code>, <code>Color.Primary</code>.
+            </MudText>
+        </MudAlert>
+    </MudItem>
+</MudGrid>
+
+@code {
+
+}

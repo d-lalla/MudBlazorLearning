@@ -1,0 +1,260 @@
+@page "/tables"
+
+<PageTitle>Tabelle - MudBlazor Learning</PageTitle>
+
+<MudText Typo="Typo.h3" Class="mb-4">Tabelle</MudText>
+<MudText Typo="Typo.body1" Class="mb-4">
+    Le tabelle MudBlazor sono potenti e flessibili, con supporto per sorting, filtering, paginazione e altro.
+</MudText>
+
+<MudGrid>
+    <!-- Tabella Base -->
+    <MudItem xs="12">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Tabella Base</MudText>
+
+            <MudTable Items="@_simpleData" Hover="true" Breakpoint="Breakpoint.Sm">
+                <HeaderContent>
+                    <MudTh>Nome</MudTh>
+                    <MudTh>Cognome</MudTh>
+                    <MudTh>Età</MudTh>
+                    <MudTh>Città</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Nome">@context.FirstName</MudTd>
+                    <MudTd DataLabel="Cognome">@context.LastName</MudTd>
+                    <MudTd DataLabel="Età">@context.Age</MudTd>
+                    <MudTd DataLabel="Città">@context.City</MudTd>
+                </RowTemplate>
+            </MudTable>
+
+            <MudPaper Class="code-block mt-4">
+                <pre>@(@"<MudTable Items=""@_simpleData"" Hover=""true"">
+    <HeaderContent>
+        <MudTh>Nome</MudTh>
+        <MudTh>Cognome</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.FirstName</MudTd>
+        <MudTd>@context.LastName</MudTd>
+    </RowTemplate>
+</MudTable>")</pre>
+            </MudPaper>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Tabella con Sorting -->
+    <MudItem xs="12">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Tabella con Sorting</MudText>
+            <MudText Typo="Typo.body2" Class="mb-2">Clicca sulle intestazioni per ordinare</MudText>
+
+            <MudTable Items="@_sortableData" Hover="true" SortLabel="Ordina per" Dense="true">
+                <HeaderContent>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Person, object>(x => x.FirstName)">Nome</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Person, object>(x => x.LastName)">Cognome</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Person, object>(x => x.Age)">Età</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Person, object>(x => x.City)">Città</MudTableSortLabel></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Nome">@context.FirstName</MudTd>
+                    <MudTd DataLabel="Cognome">@context.LastName</MudTd>
+                    <MudTd DataLabel="Età">@context.Age</MudTd>
+                    <MudTd DataLabel="Città">@context.City</MudTd>
+                </RowTemplate>
+            </MudTable>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Tabella con Paginazione -->
+    <MudItem xs="12">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Tabella con Paginazione</MudText>
+
+            <MudTable Items="@_paginatedData"
+                      Hover="true"
+                      Dense="true"
+                      Striped="true"
+                      @bind-SelectedItem="_selectedPerson"
+                      RowsPerPage="5">
+                <HeaderContent>
+                    <MudTh>Nome</MudTh>
+                    <MudTh>Cognome</MudTh>
+                    <MudTh>Età</MudTh>
+                    <MudTh>Città</MudTh>
+                    <MudTh>Email</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Nome">@context.FirstName</MudTd>
+                    <MudTd DataLabel="Cognome">@context.LastName</MudTd>
+                    <MudTd DataLabel="Età">@context.Age</MudTd>
+                    <MudTd DataLabel="Città">@context.City</MudTd>
+                    <MudTd DataLabel="Email">@context.Email</MudTd>
+                </RowTemplate>
+                <PagerContent>
+                    <MudTablePager PageSizeOptions="new int[]{5, 10, 25, 50}" />
+                </PagerContent>
+            </MudTable>
+
+            @if (_selectedPerson != null)
+            {
+                <MudAlert Severity="Severity.Info" Class="mt-4">
+                    Selezionato: @_selectedPerson.FirstName @_selectedPerson.LastName
+                </MudAlert>
+            }
+        </MudPaper>
+    </MudItem>
+
+    <!-- Tabella con Azioni -->
+    <MudItem xs="12">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Tabella con Azioni</MudText>
+
+            <MudTable Items="@_actionData" Hover="true" Dense="true">
+                <HeaderContent>
+                    <MudTh>Nome</MudTh>
+                    <MudTh>Ruolo</MudTh>
+                    <MudTh>Status</MudTh>
+                    <MudTh>Azioni</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Nome">@context.FirstName @context.LastName</MudTd>
+                    <MudTd DataLabel="Ruolo">@context.Role</MudTd>
+                    <MudTd DataLabel="Status">
+                        <MudChip Size="Size.Small"
+                                 Color="@(context.IsActive ? Color.Success : Color.Default)">
+                            @(context.IsActive ? "Attivo" : "Inattivo")
+                        </MudChip>
+                    </MudTd>
+                    <MudTd DataLabel="Azioni">
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                                       Color="Color.Primary"
+                                       Size="Size.Small"
+                                       OnClick="@(() => EditPerson(context))" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                       Color="Color.Error"
+                                       Size="Size.Small"
+                                       OnClick="@(() => DeletePerson(context))" />
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
+        </MudPaper>
+    </MudItem>
+
+    <!-- Simple Table (più leggera) -->
+    <MudItem xs="12">
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h6" Class="mb-4">Simple Table</MudText>
+            <MudText Typo="Typo.body2" Class="mb-2">Tabella semplice senza funzionalità avanzate (più leggera)</MudText>
+
+            <MudSimpleTable Hover="true" Dense="true" Striped="true">
+                <thead>
+                    <tr>
+                        <th>Prodotto</th>
+                        <th>Prezzo</th>
+                        <th>Quantità</th>
+                        <th>Totale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in _products)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>€@item.Price.ToString("N2")</td>
+                            <td>@item.Quantity</td>
+                            <td>€@((item.Price * item.Quantity).ToString("N2"))</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="3"><strong>Totale</strong></td>
+                        <td><strong>€@_products.Sum(p => p.Price * p.Quantity).ToString("N2")</strong></td>
+                    </tr>
+                </tbody>
+            </MudSimpleTable>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private Person? _selectedPerson = null;
+
+    // Dati di esempio
+    private List<Person> _simpleData = new()
+    {
+        new Person { FirstName = "Mario", LastName = "Rossi", Age = 30, City = "Milano", Email = "mario.rossi@email.it" },
+        new Person { FirstName = "Giulia", LastName = "Bianchi", Age = 25, City = "Roma", Email = "giulia.bianchi@email.it" },
+        new Person { FirstName = "Luca", LastName = "Verdi", Age = 35, City = "Napoli", Email = "luca.verdi@email.it" }
+    };
+
+    private List<Person> _sortableData = new()
+    {
+        new Person { FirstName = "Mario", LastName = "Rossi", Age = 30, City = "Milano" },
+        new Person { FirstName = "Giulia", LastName = "Bianchi", Age = 25, City = "Roma" },
+        new Person { FirstName = "Luca", LastName = "Verdi", Age = 35, City = "Napoli" },
+        new Person { FirstName = "Anna", LastName = "Neri", Age = 28, City = "Torino" },
+        new Person { FirstName = "Paolo", LastName = "Gialli", Age = 42, City = "Bologna" }
+    };
+
+    private List<Person> _paginatedData = new()
+    {
+        new Person { FirstName = "Mario", LastName = "Rossi", Age = 30, City = "Milano", Email = "mario.rossi@email.it" },
+        new Person { FirstName = "Giulia", LastName = "Bianchi", Age = 25, City = "Roma", Email = "giulia.bianchi@email.it" },
+        new Person { FirstName = "Luca", LastName = "Verdi", Age = 35, City = "Napoli", Email = "luca.verdi@email.it" },
+        new Person { FirstName = "Anna", LastName = "Neri", Age = 28, City = "Torino", Email = "anna.neri@email.it" },
+        new Person { FirstName = "Paolo", LastName = "Gialli", Age = 42, City = "Bologna", Email = "paolo.gialli@email.it" },
+        new Person { FirstName = "Laura", LastName = "Blu", Age = 31, City = "Firenze", Email = "laura.blu@email.it" },
+        new Person { FirstName = "Marco", LastName = "Rosa", Age = 29, City = "Venezia", Email = "marco.rosa@email.it" },
+        new Person { FirstName = "Sara", LastName = "Viola", Age = 33, City = "Genova", Email = "sara.viola@email.it" },
+        new Person { FirstName = "Alessandro", LastName = "Arancio", Age = 27, City = "Palermo", Email = "alessandro.arancio@email.it" },
+        new Person { FirstName = "Francesca", LastName = "Marrone", Age = 38, City = "Bari", Email = "francesca.marrone@email.it" }
+    };
+
+    private List<PersonWithRole> _actionData = new()
+    {
+        new PersonWithRole { FirstName = "Mario", LastName = "Rossi", Role = "Admin", IsActive = true },
+        new PersonWithRole { FirstName = "Giulia", LastName = "Bianchi", Role = "Developer", IsActive = true },
+        new PersonWithRole { FirstName = "Luca", LastName = "Verdi", Role = "Designer", IsActive = false },
+        new PersonWithRole { FirstName = "Anna", LastName = "Neri", Role = "Manager", IsActive = true }
+    };
+
+    private List<Product> _products = new()
+    {
+        new Product { Name = "Laptop", Price = 1200, Quantity = 2 },
+        new Product { Name = "Mouse", Price = 25, Quantity = 5 },
+        new Product { Name = "Tastiera", Price = 80, Quantity = 3 }
+    };
+
+    private void EditPerson(PersonWithRole person)
+    {
+        Console.WriteLine($"Modifica: {person.FirstName} {person.LastName}");
+    }
+
+    private void DeletePerson(PersonWithRole person)
+    {
+        Console.WriteLine($"Elimina: {person.FirstName} {person.LastName}");
+    }
+
+    // Model classes
+    public class Person
+    {
+        public string FirstName { get; set; } = "";
+        public string LastName { get; set; } = "";
+        public int Age { get; set; }
+        public string City { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Role { get; set; } = "";
+    }
+
+    public class PersonWithRole : Person
+    {
+        public bool IsActive { get; set; }
+    }
+
+    public class Product
+    {
+        public string Name { get; set; } = "";
+        public decimal Price { get; set; }
+        public int Quantity { get; set; }
+    }
+}
