@@ -130,21 +130,21 @@
         <MudPaper Elevation="2" Class="pa-4">
             <MudText Typo="Typo.h6" Class="mb-4">Checkbox e Switch</MudText>
 
-            <MudCheckBox @bind-Checked="_checkboxValue" Color="Color.Primary">
+            <MudCheckBox T="bool" @bind-Checked="_checkboxValue" Color="Color.Primary">
                 Accetto i termini e condizioni
             </MudCheckBox>
 
-            <MudCheckBox @bind-Checked="_checkbox2Value" Color="Color.Secondary">
+            <MudCheckBox T="bool" @bind-Checked="_checkbox2Value" Color="Color.Secondary">
                 Iscrivimi alla newsletter
             </MudCheckBox>
 
             <MudDivider Class="my-4" />
 
-            <MudSwitch @bind-Checked="_switchValue" Color="Color.Primary">
+            <MudSwitch T="bool" @bind-Checked="_switchValue" Color="Color.Primary">
                 Notifiche attive
             </MudSwitch>
 
-            <MudSwitch @bind-Checked="_switch2Value" Color="Color.Success">
+            <MudSwitch T="bool" @bind-Checked="_switch2Value" Color="Color.Success">
                 Modalità scura
             </MudSwitch>
 
@@ -159,10 +159,10 @@
         <MudPaper Elevation="2" Class="pa-4">
             <MudText Typo="Typo.h6" Class="mb-4">Radio Buttons</MudText>
 
-            <MudRadioGroup @bind-SelectedOption="_selectedOption">
-                <MudRadio Option="@("option1")" Color="Color.Primary">Opzione 1</MudRadio>
-                <MudRadio Option="@("option2")" Color="Color.Secondary">Opzione 2</MudRadio>
-                <MudRadio Option="@("option3")" Color="Color.Tertiary">Opzione 3</MudRadio>
+            <MudRadioGroup T="string" @bind-SelectedOption="_selectedOption">
+                <MudRadio T="string" Option="@("option1")" Color="Color.Primary">Opzione 1</MudRadio>
+                <MudRadio T="string" Option="@("option2")" Color="Color.Secondary">Opzione 2</MudRadio>
+                <MudRadio T="string" Option="@("option3")" Color="Color.Tertiary">Opzione 3</MudRadio>
             </MudRadioGroup>
 
             <MudText Typo="Typo.body2" Class="mt-2">
